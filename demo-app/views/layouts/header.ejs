@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Web App</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <% if (typeof user !== 'undefined') { %>
+    <nav class="navbar">
+      <div class="navbar-logo">Demo App</div>
+      <div class="nav-links">
+        <% if (user.role === 'admin' || user.role === 'manager' || user.role === 'customer') { %>
+          <a href="/dashboard" class="nav-item">Dashboard</a>
+          <a href="/products" class="nav-item">Products</a>
+          <a href="#" class="nav-item">Orders</a>
+        <% } %>
+        
+        <% if (user.role === 'admin' || user.role === 'manager') { %>
+          <a href="#" class="nav-item">Users</a>
+        <% } %>
+        
+        <% if (user.role === 'admin') { %>
+          <a href="#" class="nav-item">Settings</a>
+        <% } %>
+      </div>
+      <div class="user-menu">
+        <button class="user-menu-toggle"><%= user.username %></button>
+        <div class="user-dropdown">
+          <a href="#" class="dropdown-item">Profile</a>
+          <a href="/logout" class="dropdown-item logout-button">Logout</a>
+        </div>
+      </div>
+    </nav>
+  <% } %>
+  
+  <div class="container">

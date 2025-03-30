@@ -1,0 +1,56 @@
+<%- include('layouts/header') %>
+
+<div class="products-container">
+  <h1>Products</h1>
+  
+  <div class="products-filters">
+    <div class="search-container">
+      <form action="/products" method="GET" class="product-search-form">
+        <input type="search" id="product-search" name="search" placeholder="Search products..." value="<%= searchTerm %>">
+        <button type="submit" class="search-submit">Search</button>
+      </form>
+    </div>
+    
+    <div class="filter-options">
+      <label for="category-filter">Category:</label>
+      <select id="category-filter" name="category" onchange="this.form.submit()">
+        <option value="all" <%= selectedCategory === 'all' ? 'selected' : '' %>>All Categories</option>
+        <% categories.forEach(category => { %>
+          <option value="<%= category %>" <%= selectedCategory === category ? 'selected' : '' %>><%= category %></option>
+        <% }); %>
+      </select>
+      
+      <label for="sort-options">Sort By:</label>
+      <select id="sort-options" name="sort" onchange="this.form.submit()">
+        <option value="none" <%= sortOption === 'none' ? 'selected' : '' %>>Default</option>
+        <option value="price-asc" <%= sortOption === 'price-asc' ? 'selected' : '' %>>Price: Low to High</option>
+        <option value="price-desc" <%= sortOption === 'price-desc' ? 'selected' : '' %>>Price: High to Low</option>
+        <option value="name-asc" <%= sortOption === 'name-asc' ? 'selected' : '' %>>Name: A to Z</option>
+        <option value="name-desc" <%= sortOption === 'name-desc' ? 'selected' : '' %>>Name: Z to A</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="products-list">
+    <% if (products.length === 0) { %>
+      <div class="no-products">No products found</div>
+    <% } else { %>
+      <% products.forEach(product => { %>
+        <div class="product-item" data-product-id="<%= product.id %>">
+          <div class="product-image">
+            <img src="<%= product.image %>" alt="<%= product.name %>">
+          </div>
+          <div class="product-info">
+            <div class="product-name"><%= product.name %></div>
+            <div class="product-price">$<%= product.price.toFixed(2) %></div>
+            <div class="product-category"><%= product.category %></div>
+            <div class="product-description"><%= product.description %></div>
+            <button class="add-to-cart" data-product-id="<%= product.id %>">Add to Cart</button>
+          </div>
+        </div>
+      <% }); %>
+    <% } %>
+  </div>
+</div>
+
+<%- include('layouts/footer') %>
